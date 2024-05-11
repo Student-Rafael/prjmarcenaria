@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import br.com.maiormoveis.dal.ModuloConexao;
 import java.awt.Color;
 import javax.swing.JOptionPane;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  *
@@ -23,7 +25,7 @@ public class TelaLogin extends javax.swing.JFrame {
     ResultSet rs = null;
 
     public void logar() {
-        String sql = "select * from tbusuarios where login=? and senha=?";
+        String sql = "select * from tbusuarios where login=? and senha=? and status='Ativo'";
         try {
             //preparar a consulta ao banco de dados conforme caixas de texto.
             //o ? é substituído pelo conteúdo das variáveis.
@@ -60,6 +62,20 @@ public class TelaLogin extends javax.swing.JFrame {
      */
     public TelaLogin() {
         initComponents();
+        txtSenha.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {}
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    logar(); // Chama o método logar() quando Enter for pressionado
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {}
+        });
         conexao = ModuloConexao.conector();
         //System.out.println(conexao);
         if (conexao != null) {
@@ -70,6 +86,8 @@ public class TelaLogin extends javax.swing.JFrame {
             lblStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/maiormoveis/icones/dbfail.png")));
         }
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -99,6 +117,11 @@ public class TelaLogin extends javax.swing.JFrame {
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoginActionPerformed(evt);
+            }
+        });
+        btnLogin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnLoginKeyPressed(evt);
             }
         });
 
@@ -151,6 +174,12 @@ public class TelaLogin extends javax.swing.JFrame {
         // Chama o método logar.
         logar();
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    
+    private void btnLoginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnLoginKeyPressed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_btnLoginKeyPressed
 
     /**
      * @param args the command line arguments

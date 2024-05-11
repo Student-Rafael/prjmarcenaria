@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import br.com.maiormoveis.dal.ModuloConexao;
+import java.awt.Color;
 import javax.swing.JOptionPane;
 
 public class TelaUsuario extends javax.swing.JInternalFrame {
@@ -34,6 +35,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         txtUsuLogin.setText(null);
         txtUsuSenha.setText(null);
         txtUsuFone.setText(null);
+        lblUsuStatus.setText(null);
     }
 
     private void consultar() {
@@ -48,6 +50,13 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                 txtUsuSenha.setText(rs.getString(5));
                 txtUsuFone.setText(rs.getString(3));
                 cboUsuPerfil.setSelectedItem(rs.getString(6));
+                lblUsuStatus.setText(rs.getString(7));
+                if((rs.getString(7)).equals("Ativo")){
+                    lblUsuStatus.setForeground(Color.green);
+                } else {
+                    lblUsuStatus.setForeground(Color.red);
+                }
+                
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário não localizado!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                 limparTelaUsu();
@@ -81,6 +90,8 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                     limparTelaUsu();
                 }
             }
+        } catch (java.sql.SQLIntegrityConstraintViolationException e) {
+            JOptionPane.showMessageDialog(null, "Nome de Login em uso. Informe um novo login.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
@@ -114,16 +125,16 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         }
     }
 
-    private void deletar() {
-        int deletar = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja remover este usuário?", "Atenção", JOptionPane.YES_NO_OPTION);
+    private void desativar() {
+        int deletar = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja desativar este usuário?", "Atenção", JOptionPane.YES_NO_OPTION);
         if (deletar == JOptionPane.YES_OPTION) {
-            String sql = "delete from tbusuarios where iduser=?";
+            String sql = "UPDATE tbusuarios SET status = 'Inativo' WHERE iduser = ?";
             try {
                 pst = conexao.prepareStatement(sql);
                 pst.setString(1, txtUsuId.getText());
                 int deletado = pst.executeUpdate();
                 if (deletado > 0) {
-                    JOptionPane.showMessageDialog(null, "Usuário removido com sucesso!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Usuário desativado com sucesso!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                     txtUsuId.setText(null);
                     limparTelaUsu();
                 }
@@ -161,6 +172,8 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         btnUsuDelete = new javax.swing.JButton();
         btnUsuUpdate = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        lblUsuStatus = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -245,7 +258,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         });
 
         btnUsuDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/maiormoveis/icones/delete.png"))); // NOI18N
-        btnUsuDelete.setToolTipText("Remover");
+        btnUsuDelete.setToolTipText("Desativar Usuário");
         btnUsuDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnUsuDelete.setPreferredSize(new java.awt.Dimension(80, 80));
         btnUsuDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -267,6 +280,11 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel7.setText("* Campos Obrigatórios");
 
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel8.setText("Status:");
+
+        lblUsuStatus.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -284,6 +302,10 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(txtUsuId, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(31, 31, 31)
+                                        .addComponent(jLabel8)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lblUsuStatus)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jLabel7))
                                     .addComponent(txtUsuNome)))
@@ -326,7 +348,9 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtUsuId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8)
+                    .addComponent(lblUsuStatus))
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -398,7 +422,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
 
     private void btnUsuDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuDeleteActionPerformed
         // TODO add your handling code here:
-        deletar();
+        desativar();
     }//GEN-LAST:event_btnUsuDeleteActionPerformed
 
 
@@ -415,6 +439,8 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel lblUsuStatus;
     private javax.swing.JTextField txtUsuFone;
     private javax.swing.JTextField txtUsuId;
     private javax.swing.JTextField txtUsuLogin;
