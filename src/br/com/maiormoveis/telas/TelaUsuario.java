@@ -9,6 +9,7 @@ package br.com.maiormoveis.telas;
  *
  * @author euraf
  */
+import br.com.maiormoveis.classes.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -40,9 +41,11 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
 
     private void consultar() {
         String sql = "select * from tbusuarios where iduser=?";
+        Usuario usuario = new Usuario();
+        usuario.setId(txtUsuId.getText());
         try {
             pst = conexao.prepareStatement(sql);
-            pst.setString(1, txtUsuId.getText());
+            pst.setString(1, usuario.getId());
             rs = pst.executeQuery();
             if (rs.next()) {
                 txtUsuNome.setText(rs.getString(2));
@@ -51,12 +54,12 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                 txtUsuFone.setText(rs.getString(3));
                 cboUsuPerfil.setSelectedItem(rs.getString(6));
                 lblUsuStatus.setText(rs.getString(7));
-                if((rs.getString(7)).equals("Ativo")){
+                if ((rs.getString(7)).equals("Ativo")) {
                     lblUsuStatus.setForeground(Color.green);
                 } else {
                     lblUsuStatus.setForeground(Color.red);
                 }
-                
+
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário não localizado!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                 limparTelaUsu();
@@ -71,14 +74,21 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
 
     private void cadastrar() {
         String sql = "insert into tbusuarios (iduser, usuario, fone, login, senha, perfil) values (?, ?, ?, ?, ?, ?)";
+        Usuario usuario = new Usuario();
+        usuario.setId(txtUsuId.getText());
+        usuario.setNome(txtUsuNome.getText());
+        usuario.setFone(txtUsuFone.getText());
+        usuario.setLogin(txtUsuLogin.getText());
+        usuario.setSenha(txtUsuSenha.getText());
+        usuario.setPerfil(cboUsuPerfil.getSelectedItem().toString());
         try {
             pst = conexao.prepareStatement(sql);
-            pst.setString(1, txtUsuId.getText());
-            pst.setString(2, txtUsuNome.getText());
-            pst.setString(3, txtUsuFone.getText());
-            pst.setString(4, txtUsuLogin.getText());
-            pst.setString(5, txtUsuSenha.getText());
-            pst.setString(6, cboUsuPerfil.getSelectedItem().toString());
+            pst.setString(1, usuario.getId());
+            pst.setString(2, usuario.getNome());
+            pst.setString(3, usuario.getFone());
+            pst.setString(4, usuario.getLogin());
+            pst.setString(5, usuario.getSenha());
+            pst.setString(6, usuario.getPerfil());
             if ((txtUsuId.getText().isEmpty()) || (txtUsuNome.getText().isEmpty()) || (txtUsuLogin.getText().isEmpty()) || (txtUsuSenha.getText().isEmpty())) {
                 JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatórios.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
 
@@ -99,14 +109,21 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
 
     private void alterar() {
         String sql = "update tbusuarios set usuario=?, fone=?, login=?, senha=?, perfil=? where iduser=?";
+        Usuario usuario = new Usuario();
+        usuario.setId(txtUsuId.getText());
+        usuario.setNome(txtUsuNome.getText());
+        usuario.setFone(txtUsuFone.getText());
+        usuario.setLogin(txtUsuLogin.getText());
+        usuario.setSenha(txtUsuSenha.getText());
+        usuario.setPerfil(cboUsuPerfil.getSelectedItem().toString());
         try {
             pst = conexao.prepareStatement(sql);
-            pst.setString(1, txtUsuNome.getText());
-            pst.setString(2, txtUsuFone.getText());
-            pst.setString(3, txtUsuLogin.getText());
-            pst.setString(4, txtUsuSenha.getText());
-            pst.setString(5, cboUsuPerfil.getSelectedItem().toString());
-            pst.setString(6, txtUsuId.getText());
+            pst.setString(1, usuario.getNome());
+            pst.setString(2, usuario.getFone());
+            pst.setString(3, usuario.getLogin());
+            pst.setString(4, usuario.getSenha());
+            pst.setString(5, usuario.getPerfil());
+            pst.setString(6, usuario.getId());
             if ((txtUsuId.getText().isEmpty()) || (txtUsuNome.getText().isEmpty()) || (txtUsuLogin.getText().isEmpty()) || (txtUsuSenha.getText().isEmpty())) {
                 JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatórios.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
 
@@ -129,9 +146,11 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         int deletar = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja desativar este usuário?", "Atenção", JOptionPane.YES_NO_OPTION);
         if (deletar == JOptionPane.YES_OPTION) {
             String sql = "UPDATE tbusuarios SET status = 'Inativo' WHERE iduser = ?";
+            Usuario usuario = new Usuario();
+            usuario.setId(txtUsuId.getText());
             try {
                 pst = conexao.prepareStatement(sql);
-                pst.setString(1, txtUsuId.getText());
+                pst.setString(1, usuario.getId());
                 int deletado = pst.executeUpdate();
                 if (deletado > 0) {
                     JOptionPane.showMessageDialog(null, "Usuário desativado com sucesso!", "Aviso", JOptionPane.INFORMATION_MESSAGE);

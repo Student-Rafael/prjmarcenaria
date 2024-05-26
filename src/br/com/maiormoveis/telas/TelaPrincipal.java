@@ -83,7 +83,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menCad.setText("Cadastro");
 
         MenCadCli.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_MASK));
-        MenCadCli.setText("Cliente");
+        MenCadCli.setText("Clientes");
         MenCadCli.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MenCadCliActionPerformed(evt);
@@ -92,11 +92,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menCad.add(MenCadCli);
 
         MenCadPed.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK));
-        MenCadPed.setText("Pedido");
+        MenCadPed.setText("Pedidos");
+        MenCadPed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenCadPedActionPerformed(evt);
+            }
+        });
         menCad.add(MenCadPed);
 
         MenCadUsu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_MASK));
-        MenCadUsu.setText("Usuário");
+        MenCadUsu.setText("Usuários");
         MenCadUsu.setEnabled(false);
         MenCadUsu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -221,6 +226,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         usuario.setVisible(true);
         desktop.add(usuario);
     }//GEN-LAST:event_MenCadUsuActionPerformed
+
+    private void MenCadPedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenCadPedActionPerformed
+        // TODO add your handling code here:
+        TelaPedidos pedidos = new TelaPedidos();
+        pedidos.setVisible(true);
+        desktop.add(pedidos);
+        
+    }//GEN-LAST:event_MenCadPedActionPerformed
 
     /**
      * @param args the command line arguments

@@ -13,6 +13,7 @@ import java.awt.Color;
 import javax.swing.JOptionPane;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import br.com.maiormoveis.classes.Usuario;
 
 /**
  *
@@ -26,13 +27,18 @@ public class TelaLogin extends javax.swing.JFrame {
 
     public void logar() {
         String sql = "select * from tbusuarios where login=? and senha=? and status='Ativo'";
+        // Criar um objeto Usuario e preencher com os dados da interface gráfica
+        Usuario usuario = new Usuario();
+        usuario.setLogin(txtUsuario.getText());
+        String captura = new String(txtSenha.getPassword());
+        usuario.setSenha(captura);
         try {
             //preparar a consulta ao banco de dados conforme caixas de texto.
             //o ? é substituído pelo conteúdo das variáveis.
             pst = conexao.prepareStatement(sql);
-            pst.setString(1, txtUsuario.getText());
-            String captura = new String(txtSenha.getPassword());
-            pst.setString(2, captura);
+            pst.setString(1, usuario.getLogin());
+            //String captura = new String(txtSenha.getPassword());
+            pst.setString(2, usuario.getSenha());
             //Executar a query
             rs = pst.executeQuery();
             if (rs.next()) {
