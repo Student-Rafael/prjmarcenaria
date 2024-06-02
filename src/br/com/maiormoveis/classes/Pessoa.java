@@ -15,13 +15,15 @@ public class Pessoa {
     private String nome;
     private String id;
     private String fone;
+    private String status;
 
     // Construtor
     public Pessoa(){}
-    public Pessoa(String nome, String id, String fone) {
+    public Pessoa(String nome, String id, String fone, String status) {
         this.nome = nome;
         this.id = id;
         this.fone = fone;
+        this.status = status;
     }
 
     // Getters e Setters
@@ -47,6 +49,14 @@ public class Pessoa {
 
     public void setFone(String fone) {
         this.fone = fone;
+    }
+    
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
     
 }

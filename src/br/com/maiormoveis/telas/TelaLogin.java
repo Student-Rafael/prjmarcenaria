@@ -48,7 +48,7 @@ public class TelaLogin extends javax.swing.JFrame {
                 String perfil = rs.getString(6);
                 //verifica o tipo de perfil do usuario
                 if (perfil.equals("admin")) {
-                    TelaPrincipal.MenRelPed.setEnabled(true);
+                    TelaPrincipal.MenRelPed1.setEnabled(true);
                     TelaPrincipal.MenCadUsu.setEnabled(true);
                     TelaPrincipal.lblUsuario.setForeground(Color.red);
                 }

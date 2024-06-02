@@ -16,16 +16,14 @@ package br.com.maiormoveis.classes;
     private String login;
     private String senha;
     private String perfil;
-    private String status;
 
     // Construtor
     public Usuario(){}
     public Usuario(String nome, String id, String fone, String login, String senha, String perfil, String status) {
-        super(nome, id, fone);
+        super(nome, id, fone, status);
         this.login = login;
         this.senha = senha;
         this.perfil = perfil;
-        this.status = status;
     }
     
     //getters and setter
@@ -53,12 +51,5 @@ package br.com.maiormoveis.classes;
         this.perfil = perfil;
     }
     
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }
     

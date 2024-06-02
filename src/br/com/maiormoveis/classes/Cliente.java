@@ -16,8 +16,8 @@ public class Cliente extends Pessoa {
 
     // Construtor
     public Cliente(){}
-    public Cliente(String nome, String id, String fone, String cpf, String endereco, String email) {
-        super(nome, id, fone);
+    public Cliente(String nome, String id, String fone, String cpf, String endereco, String email, String status) {
+        super(nome, id, fone, status);
         this.cpf = cpf;
         this.endereco = endereco;
         this.email = email;

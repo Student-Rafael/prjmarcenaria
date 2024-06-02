@@ -23,8 +23,8 @@ public class ModuloConexao {
         //a linha abaixo inicia o driver
         String driver = "com.mysql.cj.jdbc.Driver";
         //variáveis para armazenar info referentes ao db
-        String url = "jdbc:mysql://localhost:3306/dbmarcenaria";
-        String user = "root";
+        String url = "jdbc:mysql://localhost:3306/dbmarcenaria?characterEncoding=utf-8";
+        String user = "dba";
         String password = "Sql110501";
         //Estabelecendo conexao com o banco
         try {
