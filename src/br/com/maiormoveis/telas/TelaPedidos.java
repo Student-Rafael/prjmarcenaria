@@ -123,8 +123,8 @@ public class TelaPedidos extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatórios.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
 
         } else {
-            if (lblStatusVend.getText().equals("Inativo")) {
-                JOptionPane.showMessageDialog(null, "Vendedor Inativo. Escolha outro vendedor.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            if (lblStatusVend.getText().equals("Inativo") || (lblStatusVend.getText().isEmpty())) {
+                JOptionPane.showMessageDialog(null, "Selecione um vendedor ativo.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                 lblStatusVend.setText(null);
                 txtIdVendedor.setText(null);
                 txtIdVendedor.setEnabled(true);

@@ -254,6 +254,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         TelaCliente cliente = new TelaCliente();
         cliente.setVisible(true);
         desktop.add(cliente);
+        cliente.toFront();
+        cliente.requestFocus();
 
     }//GEN-LAST:event_MenCadCliActionPerformed
 
@@ -284,6 +286,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         TelaUsuario usuario = new TelaUsuario();
         usuario.setVisible(true);
         desktop.add(usuario);
+        usuario.toFront();
+        usuario.requestFocus();
     }//GEN-LAST:event_MenCadUsuActionPerformed
 
     private void MenCadPedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenCadPedActionPerformed
@@ -291,6 +295,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         TelaPedidos pedidos = new TelaPedidos();
         pedidos.setVisible(true);
         desktop.add(pedidos);
+        pedidos.toFront();
+        pedidos.requestFocus();
 
     }//GEN-LAST:event_MenCadPedActionPerformed
 
@@ -299,7 +305,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         int confirma = JOptionPane.showConfirmDialog(null, "Confirma a emissão do relatório de clientes?", "Atenção", JOptionPane.YES_NO_OPTION);
         if (confirma == JOptionPane.YES_OPTION) {
             try {
-                JasperPrint print = JasperFillManager.fillReport("D://reports/clientes.jasper", null, conexao);
+                JasperPrint print = JasperFillManager.fillReport("D://reports/clientesv2.jasper", null, conexao);
                 JasperViewer.viewReport(print, false);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
@@ -322,7 +328,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
- 
+
         String data_inicial = JOptionPane.showInputDialog(null, "Insira a data inicial(DD/MM/AAAA):", "Entrada de Dados", JOptionPane.QUESTION_MESSAGE);
         String data_final = JOptionPane.showInputDialog(null, "Insira a data final(DD/MM/AAAA):", "Entrada de Dados", JOptionPane.QUESTION_MESSAGE);
 
@@ -372,6 +378,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         TelaRelPers persona = new TelaRelPers();
         persona.setVisible(true);
         desktop.add(persona);
+        persona.toFront();
+        persona.requestFocus();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
